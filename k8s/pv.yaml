@@ -7,7 +7,5 @@ spec:
     storage: 50Mi
   accessModes:
     - ReadWriteOnce
-  persistentVolumeReclaimPolicy: Retain
-  storageClassName: local-storage
   hostPath:
     path: /tmp/data
