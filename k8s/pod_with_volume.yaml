@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: hostpath-example-linux
+spec:
+  containers:
+  - name: example-container
+    image: ubuntu
+    command: ["/bin/sh","-c"]
+    args: ["touch /tmp/mydata.txt"]
+    volumeMounts:
+    - mountPath: /tmp/data
+      name: example-volume
+      readOnly: true
+  volumes:
+  - name: example-volume
+    # mount /data/foo, but only if that directory already exists
+    hostPath:
+      path: /tmp/test # directory location on host
+      type: Directory # this field is optional
