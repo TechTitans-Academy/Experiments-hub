@@ -4,7 +4,7 @@ metadata:
   name: pv1
 spec:
   capacity:
-    storage: 1Gi
+    storage: 50Mi
   accessModes:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
