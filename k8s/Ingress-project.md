@@ -1,10 +1,6 @@
 # Simple Ingress Demo on MiniKube:
 
-
-**Pod-1:** apple-app + apple-service <br>
-**Pod-2:** banana-app + banana-service
-
-#### Starting apple-app Pod.
+#### Starting apple-app pod with apple-service.
 ```
 kind: Pod
 apiVersion: v1
@@ -32,7 +28,7 @@ spec:
     - port: 5678 # Default port for image
 ```
 
-#### Starting banana-app Pod.
+#### Starting banana-app Pod with banana-service.
 
 ```
 kind: Pod
