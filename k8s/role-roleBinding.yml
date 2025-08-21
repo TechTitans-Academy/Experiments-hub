@@ -14,7 +14,11 @@ metadata:
   name: read-pods
   namespace: default
 subjects:
- - kind: User
+- kind: User
+  name: alice                       # 👈 username (required)
+  apiGroup: rbac.authorization.k8s.io
 roleRef:
-  kind: Role 
-  name: pod-reader 
+  kind: Role
+  name: pod-reader                  # 👈 the Role you want to bind
+  apiGroup: rbac.authorization.k8s.io
+
