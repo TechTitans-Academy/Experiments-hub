@@ -14,7 +14,7 @@ metadata:
   name: read-pods
   namespace: default
 subjects:
-- kind: User
+ - kind: User
 roleRef:
   kind: Role 
   name: pod-reader 
