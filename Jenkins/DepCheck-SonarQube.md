@@ -1,4 +1,4 @@
-## Adding SomarQube and DepCheck in the pipeline.
+## Adding SonarQube and DepCheck in the pipeline.
 
 ### 1. OWASP - DepCheck Plugins.
 
