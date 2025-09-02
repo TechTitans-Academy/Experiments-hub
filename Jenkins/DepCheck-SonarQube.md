@@ -10,12 +10,34 @@ OWASP Dependency-Check is a Software Composition Analysis (SCA) tool that identi
 - Add following stage in the existing pipeline and it will start generating the report with .xml and HTML file.
 
 ```
-stage('Owasp Scan'){
+pipeline {
+    agent any
+
+    stages {
+        stage('Clone the Repo') {
             steps {
-                dependencyCheck additionalArguments: '--nvdApiKey 9cb95186-729f-44fc-882b-cc3999c74456 -scan ./ --format HTML', odcInstallation: 'DP'
-                dependencyCheckPublisher pattern '**/dependency-check-report.xml'
+                git url: "https://github.com/TechTitans-Academy/TechTitans-Restaurant-App.git", branch: "main"
             }
         }
+        stage('Compile Code!') {
+            steps {
+                sh "./mvnw compile"
+            }
+        }
+        stage('Package Application') {
+            steps {
+                sh "./mvnw clean package -DskipTests"
+            }
+        }
+        stage('Owasp Scan') {
+            steps {
+                dependencyCheck additionalArguments: '-scan ./ --format XML --format HTML', odcInstallation: 'DP'
+                dependencyCheckPublisher(pattern: '**/dependency-check-report.xml')
+                archiveArtifacts artifacts: 'dependency-check-report.html', fingerprint: true
+            }
+        }
+    }
+}
 ```
 
 
