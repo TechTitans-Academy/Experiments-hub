@@ -1,0 +1,14 @@
+---
+- name: Install packages!
+  hosts: webservers
+  become: true   # Use sudo
+  tasks:
+    - name: Install httpd using apt
+      apt:
+        name: apache2
+        state: present
+    - name: Ensure Apache is running and enabled
+      ansible.builtin.service:
+        name: apache2
+        state: started
+        enabled: yes
