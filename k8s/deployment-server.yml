@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dinnerapp-deployment
+  labels:
+    app: dinnerapp
+spec:
+  replicas: 3                # Number of pods (adjust as needed)
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0      # Keep all old pods until new ones are ready
+      maxSurge: 1            # Add only one extra pod at a time
+  selector:
+    matchLabels:
+      app: dinnerapp
+  template:
+    metadata:
+      labels:
+        app: dinnerapp
+    spec:
+      containers:
+        - name: dinnerapp
+          image: techtitansacademy/dinnerapp:latest   # Use a version tag in production!
+          ports:
+            - containerPort: 80
+          imagePullPolicy: Always
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: apple-service
+spec:
+  selector:
+     app: dinnerapp
+  ports:
+    - port: 5678 # Default port for image
