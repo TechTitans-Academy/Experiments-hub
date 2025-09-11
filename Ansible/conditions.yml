@@ -1,0 +1,31 @@
+---
+# Simple condition based on a variable
+- name: Restart service only on CentOS
+  hosts: all
+  tasks:
+    - name: Restart firewalld
+      ansible.builtin.service:
+        name: firewalld
+        state: restarted
+      when: ansible_facts['os_family'] == "RedHat"
+
+# Runs only if the host’s OS family is RedHat.
+- name: Restart service only on CentOS
+  hosts: all
+  tasks:
+    - name: Restart firewalld
+      ansible.builtin.service:
+        name: firewalld
+        state: restarted
+      when: ansible_facts['os_family'] == "RedHat"
+
+# Two conditions
+- name: Conditional task with OR
+  hosts: all
+  tasks:
+    - name: Create user if CentOS or Debian
+      ansible.builtin.user:
+        name: deploy
+        state: present
+      when: ansible_facts['os_family'] == "RedHat" or
+            ansible_facts['os_family'] == "Debian"
