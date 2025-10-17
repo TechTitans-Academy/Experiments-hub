@@ -69,3 +69,5 @@ Namespace: <Namespace to deploy the application>
 
 Argo CD can automatically sync your Kubernetes cluster with your Git repository.
 Whenever you push changes to your manifests in GitHub, Argo CD will detect the update and apply the new configuration to your cluster.
+
+Please refer the screenshot from [here](https://medium.com/@muppedaanvesh/a-hands-on-guide-to-argocd-on-kubernetes-part-1-%EF%B8%8F-7a80c1b0ac98).
