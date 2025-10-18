@@ -7,107 +7,10 @@ Before we dive into the deployment process, ensure you have the following prereq
 - Kubectl installed and configured to interact with your Kubernetes cluster.
 - Helm, the package manager for Kubernetes, installed.
 
-#### Step 1: Create a Namespace
+#### Step 1: Install Helm Chart
+`helm install [RELEASE_NAME] oci://ghcr.io/prometheus-community/charts/kube-prometheus-stack`
 
-`kubectl create namespace monitoring`
-
-#### Step 2: Prometheus Configuration
-
-Create a file named prometheus-config.yaml with the following content:
-
-```
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: prometheus-server-conf
-  namespace: monitoring
-data:
-  prometheus.yml: |
-    global:
-      scrape_interval: 15s
-      evaluation_interval: 15s
-    scrape_configs:
-      - job_name: 'prometheus'
-        static_configs:
-          - targets: ['localhost:9090']
-```
-`kubectl apply -f prometheus-config.yaml -n monitoring`
-
-#### Step 3: Prometheus Deployment
-
-Create a file named prometheus-deployment.yaml:
-
-```
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: prometheus-server
-  namespace: monitoring
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: prometheus-server
-  template:
-    metadata:
-      labels:
-        app: prometheus-server
-    spec:
-      containers:
-        - name: prometheus
-          image: prom/prometheus
-          ports:
-            - containerPort: 9090
-          volumeMounts:
-            - name: config-volume
-              mountPath: /etc/prometheus
-      volumes:
-        - name: config-volume
-          configMap:
-            name: prometheus-server-conf
-            defaultMode: 420
-```
-`kubectl apply -f prometheus-deployment.yaml -n monitoring`
-
-#### Step 4: Prometheus Deployment
-To access Prometheus, we need to expose it as a service.
-
-Create a file named prometheus-service.yaml:
-
-```
-apiVersion: v1
-kind: Service
-metadata:
-  name: prometheus-service
-  namespace: monitoring
-spec:
-  selector:
-    app: prometheus-server
-  ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 9090
-  type: LoadBalancer
-```
-
-Apply the service:
-
-`kubectl apply -f prometheus-service.yaml -n monitoring`
-
-#### Step 5: Install Grafana
-
-We’ll use Helm to install Grafana. First, add the Grafana Helm repository and update it.
-
-`helm repo add grafana https://grafana.github.io/helm-charts` <br>
-`helm repo update`
-
-Install Grafana in the monitoring namespace:
-'helm install grafana grafana/grafana --namespace monitoring'
-
-Check the status of the pods to ensure Grafana is running:
-`kubectl get pods -n monitoring`
-
-#### Step 6: Access Grafana
+#### Step 2: Access Grafana
 
 To expose the Grafana-service on Kubernetes we need to run this command
 
@@ -115,10 +18,23 @@ To expose the Grafana-service on Kubernetes we need to run this command
 <br>
 `minikube service grafana-ext`
 
-#### Step 7: Access the Graphana UI.
+#### Step 3: Access the Graphana UI.
 
+- Access the Grafana UI:
+`minikube service  kube-prometheus-stack-grafana`
 
+- Retrive the password from the secrets below command:
 
+`kubectl --namespace default get secrets kube-prometheus-stack-grafana -o jsonpath="{.data.admin-password}" | base64 -d ; echo`
 
+- The username is `admin`.
 
+### Technology used in this demo:
 
+- <b>Grafana:</b> A visualization tool that displays metrics and logs from data sources like Prometheus and Loki in interactive dashboards.
+- <b>Prometheus:</b> A monitoring system that collects, stores, and queries time-series metrics from applications and infrastructure.
+- <b>Loki:</b> A log aggregation system that stores and queries logs efficiently, designed to work seamlessly with Grafana.
+- <b>Helm:</b> A package manager for Kubernetes that simplifies deploying, managing, and versioning applications using reusable configuration templates called charts. Consider this as "Package Manger like apt or Yum"
+
+### Example:
+- We use Grafana to visualize metrics such as CPU and memory utilization, which are sourced from Prometheus. Loki integrates with Grafana to provide log aggregation and analysis. Helm simplifies application installation by allowing installation with a single command, similar to package managers like APT or YUM.
