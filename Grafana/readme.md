@@ -18,7 +18,7 @@ To expose the Grafana-service on Kubernetes we need to run this command
 <br>
 `minikube service grafana-ext`
 
-#### Step 3: Access the Graphana UI.
+#### Step 3: Access the Grafana UI.
 
 - Access the Grafana UI:
 `minikube service  kube-prometheus-stack-grafana`
