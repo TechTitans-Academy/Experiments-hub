@@ -1,4 +1,4 @@
-# 🐾 Animal Voting Application 🗳️
+# 🐾 Voting Application 🗳️
 
 This is a simple web application where users can vote for their favorite animal — Elephant, Lion, Cat, or Dog. The app is built with Flask, uses Redis for caching votes, and PostgreSQL for persistent storage. It runs seamlessly using Docker Compose.
 
