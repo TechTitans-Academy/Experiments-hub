@@ -66,6 +66,7 @@ sudo exportfs -rav
 ## 2. Samba
 
 Samba is a service that allows Linux and Windows systems to share files and printers with each other. <br>
+
 <b>Use case:</b> Sharing a Linux directory with Windows clients.
 
 ### Install Samba
@@ -113,6 +114,7 @@ sudo systemctl enable --now nmb
 SSH is a protocol used to securely connect to remote servers and execute commands.
 It uses encryption to protect login credentials and data.
 <br>
+
 <b>Use case:</b> Remotely managing Linux servers.
 
 ### Install SSH Server
@@ -140,6 +142,7 @@ systemctl status sshd
 VSFTPD is a Linux FTP server that provides a secure and fast FTP service.
 It’s known for being lightweight and stable.
 <br>
+
 <b>Use case:</b> Hosting a secure FTP server to upload/download files.
 
 ### Install VSFTPD
@@ -181,6 +184,7 @@ sudo systemctl restart vsftpd
 FTP is a standard network protocol for transferring files between systems.
 Not encrypted by default; usually replaced by SFTP/FTPS.
 <br>
+
 <b>Use case:</b> Simple file transfer between servers.
 
 ### Install FTP Client
@@ -201,6 +205,7 @@ ftp <server-ip>
 
 Firewalld is a firewall management tool in Linux that controls network traffic using zones and rules.
 <br>
+
 <b>Use case:</b> Allow or block ports/services (e.g., open port 80 for HTTP).
 
 ### Install Firewalld
@@ -235,6 +240,7 @@ sudo firewall-cmd --reload
 
 Cron is a scheduling service in Linux that runs tasks automatically at specified intervals.
 <br>
+
 <b>Use case:</b> Automating backups, scripts, cleanup jobs.
 
 ### Start & Enable Cron
