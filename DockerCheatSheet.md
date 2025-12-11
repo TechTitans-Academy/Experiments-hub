@@ -58,7 +58,8 @@
 | `docker network ls` | List networks |
 | `docker network create <name>` | Create network |
 | `docker network connect <net> <container>` | Connect container to network |
-
+| `docker network disconnect <net-name> <container-name>` | Disconnect container from a network|
+| `docker network rm <network>` | Delete the network |
 ---
 
 ## ⚙️ Dockerfile Commands Summary with Examples
