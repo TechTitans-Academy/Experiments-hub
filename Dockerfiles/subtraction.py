@@ -1,1 +1,1 @@
-print("Subscraction of Two Number is :", 100)
+print("subtraction of Two Number is :", 100)
