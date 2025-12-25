@@ -24,17 +24,18 @@ That data can come from:
 apiVersion: v1
 kind: Pod
 metadata:
-  name: emptydir-pod
+  name: hostpath-pod
 spec:
   containers:
   - name: app
     image: nginx
     volumeMounts:
-    - name: temp-vol
-      mountPath: /tmp/data
+    - name: host-vol
+      mountPath: /host-data
   volumes:
-  - name: temp-vol
-    emptyDir: {}
+  - name: host-vol
+    hostPath:
+      path: /var/log
 ```
 
 ### 2. EmptyDir Volume:
