@@ -50,4 +50,27 @@ spec:
   - Ingress
 ```
 
+#### NetworkPolicies work at the Pod level, not at the Service level.
+
+<b>✅ How NetworkPolicy actually works</b>
+
+- NetworkPolicy selects Pods using labels
+- Traffic is allowed or denied to Pods
+- Services are not enforced by NetworkPolicy
+
+<b>🧩 What happens with Services then?</b>
+
+- A Service is just a virtual IP + load-balancing abstraction.
+- When traffic goes to a Service:
+
+```
+Client → Service (ClusterIP / NodePort / LB) → Backend Pods
+```
+
+👉 NetworkPolicy is enforced when traffic reaches the target Pod, not on the Service itself.
+
+📌 Key Points: 
+- ❌ You cannot apply a NetworkPolicy directly to a Service
+- ✅ You apply NetworkPolicy to Pods behind the Service
+- ✅ If Pods are denied by NetworkPolicy, the Service will also stop working
 
