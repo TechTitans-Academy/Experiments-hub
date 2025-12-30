@@ -36,9 +36,8 @@ spec:
 ```
 
 <b>Testing:</b> 
-- This will fail: `kubectl exec -it nginx3 -- curl nginx1:80`
-- Works! `kubectl exec -it nginx2 -- curl nginx1:80`
-- Fail! `kubectl exec -it nginx3 -- curl nginx1:80`
+- Works ==> `kubectl exec -it nginx2 -- curl nginx1:80`
+- Fail ==> `kubectl exec -it nginx3 -- curl nginx1:80`
 
 
 
