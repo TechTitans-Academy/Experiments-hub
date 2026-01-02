@@ -150,3 +150,10 @@ kubectl run load-generator \
   --restart=Never \
   -- /bin/sh -c "while true; do wget -q -O- http://apache-service.apache.svc.cluster.local; done"
 ```
+
+<b>Alternative command can be run outside of cluster:</b>
+```
+while true; do
+  curl -s http://<NODE-IP>:<NODE-PORT> > /dev/null
+done
+```
