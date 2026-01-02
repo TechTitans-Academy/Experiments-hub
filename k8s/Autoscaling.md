@@ -79,3 +79,74 @@ spec:
 | CPU < 5%   | 1 pod                |
 | CPU > 5%   | 2 → 3 → 4 → 5 pods   |
 | Load stops | Pods scale back to 1 |
+
+### Example-HPA
+
+`Deployment.yml`
+
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+ name: hpa-demo-deployment
+spec:
+ selector:
+   matchLabels:
+     run: hpa-demo-deployment
+ replicas: 1
+ template:
+   metadata:
+     labels:
+       run: hpa-demo-deployment
+   spec:
+     containers:
+     - name: hpa-demo-deployment
+       image: k8s.gcr.io/hpa-example
+       ports:
+       - containerPort: 80
+       resources:
+         limits:
+           cpu: 500m
+         requests:
+           cpu: 200m
+```
+
+`HPA.yml`:
+```
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+ name: hpa-demo-deployment
+spec:
+ scaleTargetRef:
+   apiVersion: apps/v1
+   kind: Deployment
+   name: hpa-demo-deployment
+ minReplicas: 1
+ maxReplicas: 10
+ targetCPUUtilizationPercentage: 50
+```
+
+`Service.yml`
+```
+apiVersion: v1
+kind: Service
+metadata:
+ name: hpa-demo-deployment
+ labels:
+   run: hpa-demo-deployment
+spec:
+ ports:
+ - port: 80
+ selector:
+   run: hpa-demo-deployment
+```
+
+<b>Load Generator </b>
+```
+kubectl run load-generator \
+  --rm -it \
+  --image=busybox \
+  --restart=Never \
+  -- /bin/sh -c "while true; do wget -q -O- http://apache-service.apache.svc.cluster.local; done"
+```
