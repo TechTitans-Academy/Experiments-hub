@@ -1,5 +1,12 @@
 # Simple Ingress Demo on MiniKube:
 
+#### Nginx Ingress install 
+
+```
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.3.0/deploy/static/provider/cloud/deploy.yaml
+kubectl get pods --namespace ingress-nginx
+```
+
 #### Starting apple-app pod with apple-service.
 ```
 kind: Pod
