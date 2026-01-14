@@ -16,7 +16,9 @@ pipeline {
     stages {
         stage('Clone the Repo') {
             steps {
-                git url: "https://github.com/TechTitans-Academy/TechTitans-Restaurant-App.git", branch: "main"
+                git url: 'https://github.com/TechTitans-Academy/TechTitans-Restaurant-App.git',
+                branch: 'main',
+                credentialsId: 'gitpass'
             }
         }
         stage('Compile Code!') {
@@ -29,13 +31,24 @@ pipeline {
                 sh "./mvnw clean package -DskipTests"
             }
         }
-        stage('Owasp Scan') {
-            steps {
-                dependencyCheck additionalArguments: '-scan ./ --format XML --format HTML', odcInstallation: 'DP'
-                dependencyCheckPublisher(pattern: '**/dependency-check-report.xml')
-                archiveArtifacts artifacts: 'dependency-check-report.html', fingerprint: true
-            }
-        }
+      stage('Owasp Scan') {
+    steps {
+        dependencyCheck(
+            odcInstallation: 'DP',
+            additionalArguments: '-scan ./ --format XML --format HTML --nvdApiKey <KEY>'
+        )
+
+        dependencyCheckPublisher(
+            pattern: '**/dependency-check-report.xml'
+        )
+
+        archiveArtifacts(
+            artifacts: 'dependency-check-report.html',
+            fingerprint: true
+        )
+    }
+}
+
     }
 }
 ```
