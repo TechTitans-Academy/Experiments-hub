@@ -1,0 +1,25 @@
+---
+- name: Create S3 bucket using amazon.aws collection
+  hosts: localhost
+  connection: local
+  gather_facts: no
+
+  collections:
+    - amazon.aws
+
+  vars:
+    aws_access_key: <KEY>
+    aws_secret_key: <SKEY>
+    aws_region: ap-south-1
+    bucket_name: techtitans-demo-bucket-12345
+
+  tasks:
+    - name: Create S3 bucket
+      amazon.aws.s3_bucket:
+        name: "{{ bucket_name }}"
+        state: present
+        region: "{{ aws_region }}"
+        aws_access_key: "{{ aws_access_key }}"
+        aws_secret_key: "{{ aws_secret_key }}"
+        versioning: true
+        encryption: AES256
