@@ -1,4 +1,5 @@
 ---
+# Make sure to install the amazon.aws collection with "ansible-galaxy collection install amazon.aws"
 - name: Create S3 bucket using amazon.aws collection
   hosts: localhost
   connection: local
