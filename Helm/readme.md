@@ -4,19 +4,19 @@
 - Helm is a package manager for Kubernete
 - Helm packages are called Charts
 
-#### Similar to:
+#### Similar to :
 - apt for Linux
 - npm for Node.js
 - yum for RHEL
 
-#### Problems Helm Solves
+#### Problems Helm Solves:
 
 - Too many YAML files
 - Repeated configurations
 - Versioning and rollbacks
 - Environment-specific configs (dev/prod)
 
-#### 📌 Key Terms
+#### 📌 Key Terms:
 
 - Chart
 - Release
