@@ -1,0 +1,81 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "graphTooltip": 0,
+  "panels": [
+    {
+      "type": "timeseries",
+      "title": "Pod CPU Usage (cores)",
+      "targets": [
+        {
+          "expr": "sum(rate(container_cpu_usage_seconds_total{container!=\"POD\", pod=~\".+\"}[5m])) by (pod, namespace)",
+          "legendFormat": "{{namespace}} / {{pod}}"
+        }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "Pod Memory Usage (bytes)",
+      "targets": [
+        {
+          "expr": "sum(container_memory_usage_bytes{container!=\"POD\", pod=~\".+\"}) by (pod, namespace)",
+          "legendFormat": "{{namespace}} / {{pod}}"
+        }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "Pod Network Receive (bytes/sec)",
+      "targets": [
+        {
+          "expr": "sum(rate(container_network_receive_bytes_total{pod=~\".+\"}[5m])) by (pod, namespace)",
+          "legendFormat": "{{namespace}} / {{pod}}"
+        }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "Pod Network Transmit (bytes/sec)",
+      "targets": [
+        {
+          "expr": "sum(rate(container_network_transmit_bytes_total{pod=~\".+\"}[5m])) by (pod, namespace)",
+          "legendFormat": "{{namespace}} / {{pod}}"
+        }
+      ]
+    },
+    {
+      "type": "stat",
+      "title": "Pod Restarts",
+      "targets": [
+        {
+          "expr": "sum(kube_pod_container_status_restarts_total{pod=~\".+\"}) by (pod, namespace)",
+          "legendFormat": "{{namespace}} / {{pod}}"
+        }
+      ]
+    },
+    {
+      "type": "stat",
+      "title": "Pod Ready Status",
+      "targets": [
+        {
+          "expr": "kube_pod_status_ready{condition=\"true\", pod=~\".+\"}",
+          "legendFormat": "{{namespace}} / {{pod}}"
+        }
+      ]
+    }
+  ],
+  "schemaVersion": 36,
+  "title": "All Kubernetes Pods - Monitoring Dashboard"
+}
